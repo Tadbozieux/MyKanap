@@ -1,16 +1,16 @@
-let url = "http://localhost:3000/api/products"
 fetch("http://localhost:3000/api/products")
     .then((res) => res.json())
-    .then((json) =>console.log(json))
+    .then((json) => {
+        console.log (json)
+        const imageUrl = json[0].imageUrl
+        console.log (imageUrl)
 
-//Creation variable de la classe "Items"
-let items = document.getElementById('items')   
 
+        const anchor = document.createElement("a")   
+        anchor.href = imageUrl
+        anchor.text= "Kanap Sinopé"
+        const items = document.getElementById('items')
+        items.appendChild(anchor) 
+    
+    })
 
-
-//Creation de la variable de la balise "a" et nestage
-
-let liensCardCanap = document.createElement("a")   
-liensCardCanap.href = "./product.html?id=107fb5b75607497b96722bda5b504926"
-liensCardCanap.text= "Kanap Sinopé"
-items.appendChild(liensCardCanap)
