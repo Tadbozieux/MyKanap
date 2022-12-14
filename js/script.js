@@ -41,7 +41,10 @@ fetch("http://localhost:3000/api/products")
         article.appendChild(h3)
         console.log(h3)
         const name = donnees[0].name
+        h3.classList.add = "productName"
         h3.textContent = name
+        
+
 
 
         const p = document.createElement("p")
