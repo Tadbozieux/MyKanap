@@ -22,13 +22,13 @@ fetch("http://localhost:3000/api/products")
             
         
     
-            const article = document.createElement("article")
+            const article = document.createElement("article")       //creation article
             anchor.appendChild(article) 
             console.log(article)
     
     
     
-            const image = document.createElement("img")
+            const image = document.createElement("img")             //creation /img
             article.appendChild(image)
             console.log(image)
             const imageUrl = donnees[i].imageUrl
@@ -41,7 +41,7 @@ fetch("http://localhost:3000/api/products")
             
     
     
-            const h3 = document.createElement("h3")
+            const h3 = document.createElement("h3")                     //creation h3
             article.appendChild(h3)
             console.log(h3)
             const name = donnees[i].name
@@ -51,7 +51,7 @@ fetch("http://localhost:3000/api/products")
     
     
     
-            const p = document.createElement("p")
+            const p = document.createElement("p")               //creation p
             article.appendChild(p)
             console.log(p)
             const description = donnees[i].description
