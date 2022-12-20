@@ -28,6 +28,7 @@ function addInformations(kanapé){               //creation variable des compose
     const altTxt= kanapé.altTxt
     const colors = kanapé.colors
     const description = kanapé.description
+    
 
 
     let image = document.createElement("img")
@@ -75,10 +76,13 @@ validationPanier.addEventListener("click", (e) => {
         color: color,
         quantity: quantity,
         price: price,
+        description: description,
+        name: name,
+        imageUrl: imageUrl,
+        altTxt: altTxt
     }
     
     localStorage.setItem (id, JSON.stringify (item))      //local storage avec stingation de l'objet "Item"
-    
     document.location.href = "cart.html"
     })
 } 
