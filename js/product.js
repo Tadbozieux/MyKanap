@@ -2,17 +2,14 @@
 
 
 const queryString = window.location.search;    //https://blog.arcoptimizer.com/obtenir-les-parametres-durl-avec-javascript-2
-console.log (queryString);
+//console.log (queryString);
 const urlParams = new URLSearchParams (queryString);
-console.log (urlParams);
+//console.log (urlParams);
 const id = urlParams.get("id")
-console.log (id)
+//console.log (id)
 
 
 
-for (let p of urlParams){
-    console.log(p)
-}
 
 
 
@@ -23,7 +20,7 @@ fetch(`http://localhost:3000/api/products/${id}`)   //https://www.youtube.com/wa
         return addInformations(json)
     })  
 
-function addInformations(kanapé){
+function addInformations(kanapé){               //creation variable des composents produit
     const imageUrl = kanapé.imageUrl
     console.log(imageUrl)
     const name= kanapé.name
@@ -33,24 +30,24 @@ function addInformations(kanapé){
     const description = kanapé.description
 
 
-let image = document.createElement("img")
-image.src = imageUrl
-image.alt = altTxt
-let parentImg = document.querySelector (".item__img")
-parentImg.appendChild (image)
+    let image = document.createElement("img")
+    image.src = imageUrl
+    image.alt = altTxt
+    let parentImg = document.querySelector (".item__img")
+    parentImg.appendChild (image)
 
 
-nomKanapé = document.querySelector ("#title .h1")
-title.textContent = name
+    nomKanapé = document.querySelector ("#title .h1")
+    title.textContent = name
 
 
-prixKanapé = document.getElementById ("price")
-prixKanapé.textContent = price
+    prixKanapé = document.getElementById ("price")
+    prixKanapé.textContent = price
 
-descriptionKanapé = document.getElementById ("description")
-descriptionKanapé.textContent = description
+    descriptionKanapé = document.getElementById ("description")
+    descriptionKanapé.textContent = description
 
-const select = document.getElementById ("colors")
+    const select = document.getElementById ("colors")
 
 colors.forEach((color) => {                                 //Pour chaque coueleur selon ID
     const option = document.createElement("option")         //créer une option
@@ -58,19 +55,39 @@ colors.forEach((color) => {                                 //Pour chaque couele
     option.textContent = color
     console.log(color)
     select.appendChild(option)
-});
+})
 
-// let optionValue1 = document.createElement("option")              // Methode static non utilisable
-// valueKanapé.appendChild (optionValue1)
-// let optionValue2 = document.createElement("option")
-// valueKanapé.appendChild (optionValue2)
-// let optionValue3 = document.createElement("option")
-// valueKanapé.appendChild (optionValue3)
-// optionValue1.textContent = "Blue"
-// optionValue2.textContent = "White"
-// optionValue3.textContent = "Black"
-}
+
+
+
+const validationPanier = document.querySelector("#addToCart")
+
+validationPanier.addEventListener("click", (e) => {
+    const color = document.getElementById("colors").value
+    const quantity = document.getElementById("quantity").value
+    
+    if (color == null || color == "" || quantity == "0"){
+        alert("Veuillez selectionner une couleur ainsi qu'une quantité")
+        return
+    }
+        const item = {
+        id: id,
+        color: color,
+        quantity: quantity,
+        price: price,
+    }
+    
+    localStorage.setItem (id, JSON.stringify (item))      //local storage avec stingation de l'objet "Item"
+    
+    document.location.href = "cart.html"
+    })
+} 
+
+
 
   
         
      
+
+
+
