@@ -71,10 +71,11 @@ validationPanier.addEventListener("click", (e) => {
         alert("Veuillez selectionner une couleur ainsi qu'une quantité")
         return
     }
+        const key = `${id}-${color}`    //Ici Key prend en compte id ET la Couleur sinon un acheter un meme canapé d'une couleur diff supprimerai la saisie precedente! 
         const item = {
         id: id,
         color: color,
-        quantity: quantity,
+        quantity: Number(quantity),
         price: price,
         description: description,
         name: name,
@@ -82,7 +83,7 @@ validationPanier.addEventListener("click", (e) => {
         altTxt: altTxt
     }
     
-    localStorage.setItem (id, JSON.stringify (item))      //local storage avec stingation de l'objet "Item"
+    localStorage.setItem(key, JSON.stringify(item))      //local storage avec stingation de l'objet "Item"
     document.location.href = "cart.html"
     })
 } 
