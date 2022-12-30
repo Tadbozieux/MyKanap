@@ -52,46 +52,57 @@ for (let i = 0 ; i < itemsPanier; i++){
           const totalPrice = document.querySelector("#totalPrice")              //definition prix totale panier
           const total = cart.reduce((total, canap) => total + canap.price * canap.quantity, 0)
           totalPrice.textContent = total
-          deleteProduct()
+          
+          
+          let deleteItem = document.querySelectorAll(".deleteItem");
+          console.log(deleteItem)
+          console.log(deleteItem.length)
+          console.log(total2)
+          console.log(canap.id)
+          
+
+         
+
+
         
-          function deleteProduct() {
-            selectSupprimer = document.querySelectorAll(".deleteItem");
-            console.log (selectSupprimer)
-            selectSupprimer.forEach((selectSupprimer) => {
-                    selectSupprimer.addEventListener("click" , (event) => {
-                        event.preventDefault();
+        //   function deleteProduct() {
+        //     selectSupprimer = document.querySelectorAll(".deleteItem");
+        //     console.log (selectSupprimer)
+        //     selectSupprimer.forEach((selectSupprimer) => {
+        //             selectSupprimer.addEventListener("click" , (event) => {
+        //                 event.preventDefault();
                                     
-                        // On pointe le parent hiérarchique <article> du lien "supprimer"
-                        let myArticle = selectSupprimer.closest('article');
-                        console.log(myArticle);
-                        // on filtre les éléments du localStorage pour ne garder que ceux qui sont différents de l'élément qu'on supprime
-                        productRegisterInLocalStorage = productRegisterInLocalStorage.filter
-                        ( element => element.idProduct !== myArticle.dataset.id || element.colorProduct !== myArticle.dataset.color );
+        //                 // On pointe le parent hiérarchique <article> du lien "supprimer"
+        //                 let myArticle = selectSupprimer.closest('article');
+        //                 console.log(myArticle);
+        //                 // on filtre les éléments du localStorage pour ne garder que ceux qui sont différents de l'élément qu'on supprime
+        //                 productRegisterInLocalStorage = productRegisterInLocalStorage.filter
+        //                 ( element => element.idProduct !== myArticle.dataset.id || element.colorProduct !== myArticle.dataset.color );
                         
-                        // On met à jour le localStorage
-                        localStorage.setItem("produit", JSON.stringify(productRegisterInLocalStorage));
+        //                 // On met à jour le localStorage
+        //                 localStorage.setItem("produit", JSON.stringify(productRegisterInLocalStorage));
                         
-                        //Alerte produit supprimé
-                        alert("Ce produit va être supprimé du panier.");
+        //                 //Alerte produit supprimé
+        //                 alert("Ce produit va être supprimé du panier.");
                          
                         
-                        // On supprime physiquement la balise <article> du produit que l'on supprime depuis son parent, si elle existe
-                        if (myArticle.parentNode) {
-                            myArticle.parentNode.removeChild(myArticle);
-                        }
-                        //-----Si, du coup, le panier est vide (le localStorage est vide ou le tableau qu'il contient est vide),...
-                        //...on affiche "Le panier est vide"-------------------------------------------------------------------
-                        if(productRegisterInLocalStorage === null || productRegisterInLocalStorage.length === 0){
-                            messagePanierVide();
-                        }
-                        else{
-                        // Et, on recalcule la quantité et le prix total du panier
-                        recalculTotalQuantity();
-                        recalculTotalPrice();
-                        }
-                    }); 
-            })
-        }
+        //                 // On supprime physiquement la balise <article> du produit que l'on supprime depuis son parent, si elle existe
+        //                 if (myArticle.parentNode) {
+        //                     myArticle.parentNode.removeChild(myArticle);
+        //                 }
+        //                 //-----Si, du coup, le panier est vide (le localStorage est vide ou le tableau qu'il contient est vide),...
+        //                 //...on affiche "Le panier est vide"-------------------------------------------------------------------
+        //                 if(productRegisterInLocalStorage === null || productRegisterInLocalStorage.length === 0){
+        //                     messagePanierVide();
+        //                 }
+        //                 else{
+        //                 // Et, on recalcule la quantité et le prix total du panier
+        //                 recalculTotalQuantity();
+        //                 recalculTotalPrice();
+        //                 }
+        //             }); 
+        //     })
+        // }
 
 
 

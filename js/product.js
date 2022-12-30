@@ -85,7 +85,7 @@ validationPanier.addEventListener("click", (e) => {
     
     localStorage.setItem(key, JSON.stringify(item))      //local storage avec stingation de l'objet "Item"
     document.location.href = "cart.html"
-    })
+    }) 
 } 
 
 
