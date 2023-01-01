@@ -44,6 +44,8 @@ function hydrateCart(cart) {
             `
   });
   makeItemTotal();
+  // MajItemTotal()
+ 
 }
 
 function makeItemTotal() {
@@ -67,5 +69,18 @@ function makeItemTotal() {
 }
 
 
-let test = document.querySelector(".itemQuantity")
-console.log(test)
+
+
+let inputItemQuantity = document.getElementsByClassName("itemQuantity")
+console.log(inputItemQuantity)  
+
+for (const itemQuantity of inputItemQuantity){      //https://bobbyhadz.com/blog/javascript-addeventlistener-is-not-a-function
+  itemQuantity.addEventListener("input",  console.log)
+}
+
+// function MajItemTotal(id){
+//   // const itemToUptdate = cart.find((canap) => canap.id ===id)
+//   // console.log(itemToUptdate)
+// }
+
+// inputItemQuantity.addEventListener("input", console.log)
