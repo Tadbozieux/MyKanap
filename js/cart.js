@@ -12,6 +12,8 @@ function retrieveItemsFromCache() {
     cart.push(objetitem);
     // console.log(cart)
   }
+// console.log(localStorage.getItem())
+
 }
 
 hydrateCart(cart);
@@ -75,12 +77,20 @@ let inputItemQuantity = document.getElementsByClassName("itemQuantity")
 console.log(inputItemQuantity)  
 
 for (const itemQuantity of inputItemQuantity){      //https://bobbyhadz.com/blog/javascript-addeventlistener-is-not-a-function
-  itemQuantity.addEventListener("input",  console.log)
+  itemQuantity.addEventListener("input",   console.log)
 }
 
-// function MajItemTotal(id){
-//   // const itemToUptdate = cart.find((canap) => canap.id ===id)
-//   // console.log(itemToUptdate)
-// }
 
-// inputItemQuantity.addEventListener("input", console.log)
+
+
+//*******Formulaire*********************
+
+const form = document.querySelector(".cart__order__form")
+console.log (form);
+
+const commander = document.querySelector("#order" )
+commander.addEventListener("click",() => validationForm())
+
+function validationForm(){
+  prompt("commande OK")
+}

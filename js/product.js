@@ -64,10 +64,12 @@ colors.forEach((color) => {                                 //Pour chaque couele
 const validationPanier = document.querySelector("#addToCart")
 
 validationPanier.addEventListener("click", (e) => {
-    const color = document.getElementById("colors").value
-    const quantity = document.getElementById("quantity").value
     
-    if (color == null || color == "" || quantity == "0"){
+    const color = document.getElementById("colors").value
+    const quantity = Number(document.getElementById("quantity").value)
+    
+    
+    if (!color  || color === "" || !quantity ){
         alert("Veuillez selectionner une couleur ainsi qu'une quantité")
         return
     }
@@ -75,7 +77,7 @@ validationPanier.addEventListener("click", (e) => {
         const item = {
         id: id,
         color: color,
-        quantity: Number(quantity),
+        quantity: quantity,
         price: price,
         description: description,
         name: name,
@@ -90,9 +92,16 @@ validationPanier.addEventListener("click", (e) => {
 
 
 
-  
-        
      
 
 
+// controle si local storage vide 
 
+// si oui rajouter item
+
+// si non controler Id     
+//     si nouveau id le rajouter
+//     sinon controler couleur 
+
+// si nouvelle couleur le rajouter
+// sinon cumuler noyuveau nombre avec ancien
