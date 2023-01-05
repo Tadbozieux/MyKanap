@@ -64,7 +64,7 @@ function addInformations(kanapé){               //creation variable des compose
     const validationPanier = document.querySelector("#addToCart")
 
     validationPanier.addEventListener("click", (e) => {
-        e.preventDefault();
+        // e.preventDefault();
     
         const color = document.getElementById("colors").value
         const quantity = Number(document.getElementById("quantity").value)
@@ -126,6 +126,7 @@ function addInformations(kanapé){               //creation variable des compose
                                 //et ceci jusqu'a 100, ensuite 100 sera tjs le plus petit donc la valeur max affichée !
                                 localStorage.setItem(key, JSON.stringify(myCart)),
                                 confirmationAdditionPannier ()
+                                
                             )
                         }else{
                             myCart.push(item)       // donnée poussée dans le tableau
@@ -143,7 +144,7 @@ function addInformations(kanapé){               //creation variable des compose
                 
             
                     
-            }         //document.location.href = "cart.html"
+            }         document.location.href = "cart.html"
         }
     
         
