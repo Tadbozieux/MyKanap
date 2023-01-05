@@ -16,13 +16,13 @@ const id = urlParams.get("id")
 fetch(`http://localhost:3000/api/products/${id}`)   //https://www.youtube.com/watch?v=SJ2oWKEmCoE    /   
     .then((response) => response.json())            //https://stackoverflow.com/questions/35835362/what-does-dollar-sign-and-curly-braces-mean-in-a-string-in-javascript
     .then((json) => {
-        console.log(json)
+        // console.log(json)
         return addInformations(json)
     })  
 
 function addInformations(kanapé){               //creation variable des composents produit
     const imageUrl = kanapé.imageUrl
-    console.log(imageUrl)
+    // console.log(imageUrl)
     const name= kanapé.name
     const price = kanapé.price
     const altTxt= kanapé.altTxt
@@ -50,44 +50,94 @@ function addInformations(kanapé){               //creation variable des compose
 
     const select = document.getElementById ("colors")
 
-colors.forEach((color) => {                                 //Pour chaque coueleur selon ID
-    const option = document.createElement("option")         //créer une option
-    option.value = color                                    // dont les choix sonrt les couleurs renseignées
-    option.textContent = color
-    console.log(color)
-    select.appendChild(option)
-})
+    colors.forEach((color) => {                                 //Pour chaque coueleur selon ID
+        const option = document.createElement("option")         //créer une option
+        option.value = color                                    // dont les choix sonrt les couleurs renseignées
+        option.textContent = color
+        // console.log(color)
+        select.appendChild(option)
+    })
 
 
 
 
-const validationPanier = document.querySelector("#addToCart")
+    const validationPanier = document.querySelector("#addToCart")
 
-validationPanier.addEventListener("click", (e) => {
+    validationPanier.addEventListener("click", (e) => {
+        e.preventDefault();
     
-    const color = document.getElementById("colors").value
-    const quantity = Number(document.getElementById("quantity").value)
-    
-    
-    if (!color  || color === "" || !quantity ){
-        alert("Veuillez selectionner une couleur ainsi qu'une quantité")
-        return
+        const color = document.getElementById("colors").value
+        const quantity = Number(document.getElementById("quantity").value)
+
+        
+        
+        if (!color  || color === "" || !quantity || quantity < 0 || quantity > 100){
+            //Si les conditions ne sont pas correctes emssage erreur:
+            alert("Veuillez selectionner une couleur parmis le choix proposé ainsi qu'une quantité comprise entre 1 et 100")
+            return
+        }else{
+            
+            // alert("Super choix !")
+            
+            const key = `${id}-${color}`    //Ici Key prend en compte id ET la Couleur sinon un acheter un meme canapé d'une couleur diff supprimerai la saisie precedente! 
+            console.log(key);
+            const item = {
+                id: id,
+                color: color,
+                quantity: quantity,
+                // price: price,
+                // description: description,
+                name: name,
+                // imageUrl: imageUrl,
+                // altTxt: altTxt
+            }
+            console.log(`Préparation de ${item.name}:`, item)
+            addProductLocalStorage(key)
+
+        
+
+            //Creation de la fontion d'ajout selon le panier:
+            
+
+
+            function addProductLocalStorage(key) {
+
+                
+                let myCart = JSON.parse(localStorage.getItem(key))
+                console.log(myCart)
+                console.log(key)
+
+                if (myCart == null) {     //Dans le cas ou le local storage est vide 
+                    myCart = []
+                    console.log(myCart)
+                    myCart.push(item)
+                    localStorage.setItem(key, JSON.stringify(myCart))    //local storage avec stingation de l'objet "Item"
+                    console.log(myCart); // Confirmation de l'ajout au panier
+                    alert("c'est ajouté")
+                }else if ((myCart != null) && (key.color == myCart.color)) {
+               
+                   
+                         alert("tas deja choisi cet article bro")
+                         
+                     
+                    
+                }else if ((myCart != null) && (key.color != myCart.color)) {
+                        console.log("ok tu as de nouveau choisi ${item.name}")
+                        alert(`Préparation de ${item.name}:`, item)
+                    }
+                
+
+
+            
+                
+            
+                    
+                    // document.location.href = "cart.html"
+        }
     }
-        const key = `${id}-${color}`    //Ici Key prend en compte id ET la Couleur sinon un acheter un meme canapé d'une couleur diff supprimerai la saisie precedente! 
-        const item = {
-        id: id,
-        color: color,
-        quantity: quantity,
-        price: price,
-        description: description,
-        name: name,
-        imageUrl: imageUrl,
-        altTxt: altTxt
-    }
-    
-    localStorage.setItem(key, JSON.stringify(item))      //local storage avec stingation de l'objet "Item"
-    document.location.href = "cart.html"
-    }) 
+        
+    })
+
 } 
 
 

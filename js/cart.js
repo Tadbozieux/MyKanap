@@ -8,11 +8,11 @@ function retrieveItemsFromCache() {
     let item = localStorage.getItem(localStorage.key(i));
     // console.log("objet a la position " , i, "est", item) //donnes les items de JSON
     const objetitem = JSON.parse(item); //transforme JSON en Objet  (inverse JSON.stringify)
-    // console.log(objetitem)
+    console.log(objetitem)
     cart.push(objetitem);
-    // console.log(cart)
+    console.log(cart)
   }
-// console.log(localStorage.getItem())
+console.log(localStorage.getItem())
 
 }
 
