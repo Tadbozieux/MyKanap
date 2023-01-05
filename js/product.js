@@ -85,11 +85,11 @@ function addInformations(kanapé){               //creation variable des compose
                 id: id,
                 color: color,
                 quantity: quantity,
-                // price: price,
-                // description: description,
+                price: price,
+                description: description,
                 name: name,
-                // imageUrl: imageUrl,
-                // altTxt: altTxt
+                imageUrl: imageUrl,
+                altTxt: altTxt
             }
             console.log(`Préparation de ${item.name}:`, item)
             addProductLocalStorage(key)
@@ -106,35 +106,46 @@ function addInformations(kanapé){               //creation variable des compose
                 let myCart = JSON.parse(localStorage.getItem(key))
                 console.log(myCart)
                 console.log(key)
-
-                if (myCart == null) {     //Dans le cas ou le local storage est vide 
-                    myCart = []
+                if (myCart == null) {     //Si Local storage est vide de données :
+                    myCart = []            // creation tableau
                     console.log(myCart)
-                    myCart.push(item)
+                    myCart.push(item)       // donnée poussée dans le tableau
                     localStorage.setItem(key, JSON.stringify(myCart))    //local storage avec stingation de l'objet "Item"
                     console.log(myCart); // Confirmation de l'ajout au panier
-                    alert("c'est ajouté")
-                }else if ((myCart != null) && (key.color == myCart.color)) {
+                    // alert("c'est ajouté")
+                    confirmationAdditionPannier ()
+                }else if (myCart != null)  {
                
-                   
-                         alert("tas deja choisi cet article bro")
-                         
-                     
-                    
-                }else if ((myCart != null) && (key.color != myCart.color)) {
-                        console.log("ok tu as de nouveau choisi ${item.name}")
-                        alert(`Préparation de ${item.name}:`, item)
+                    for (i = 0; i < myCart.length; i++) {      //Scan local storage
+                        if ((myCart[i].id == item.id) && (myCart[i].color == item.color)) {  // si id produit demandé  ET couleur produit demandé sont presents dans le local storage
+                            return (            //alors on renvoi:   
+                                                                        
+                                // myCart[i].quantity = (myCart[i].quantity + item.quantity), ne se limite pas a 100 donc a oublier
+                                myCart[i].quantity = Math.min(myCart[i].quantity + item.quantity,100), 
+                                // Math.min permet d'afficher le nbre le plus petit entre 2 valeur donc ici on additionne local storage + le produit choisi pour avoir la quantité total 
+                                //et ceci jusqu'a 100, ensuite 100 sera tjs le plus petit donc la valeur max affichée !
+                                localStorage.setItem(key, JSON.stringify(myCart)),
+                                confirmationAdditionPannier ()
+                            )
+                        }else{
+                            myCart.push(item)       // donnée poussée dans le tableau
+                            localStorage.setItem(key, JSON.stringify(myCart))
+                            console.log("C");
+                        }    
                     }
-                
+                    
+                } 
 
-
+                function confirmationAdditionPannier (){
+                    alert (`${item.quantity} ${item.name} placé(s) dans votre panier`, item)
+                }
             
                 
             
                     
-                    // document.location.href = "cart.html"
+            }         //document.location.href = "cart.html"
         }
-    }
+    
         
     })
 
