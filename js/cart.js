@@ -42,7 +42,17 @@ function addProducts(donnees){
       </article>      
             `
   });
-  // makeItemTotal();
+   totalProductsQuantity();
 
 
 }
+
+
+
+function totalProductsQuantity(){
+  let quantity = document.querySelector("#totalQuantity")
+  const cart = document.querySelectorAll(".cart__item")
+
+};
+
+
