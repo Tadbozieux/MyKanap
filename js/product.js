@@ -35,14 +35,15 @@ function addInformations(kanape) {
 
     if (!color || color === "" || !quantity || quantity < 0 || quantity > 100) {
       //Si les conditions ne sont pas correctes emssage erreur:
-      // document.querySelector('article').innerHTML('beforeend', `<span class="error">Veuillez selectionner une couleur parmis le choix proposé ainsi qu'une quantité comprise entre 1 et 100</span>`);
+      alert("Veuillez selectionner une couleur parmis le choix proposé ainsi qu'une quantité comprise entre 1 et 100")
+      //document.querySelector('article').innerHTML('beforeend', `<span class="error">Veuillez selectionner une couleur parmis le choix proposé ainsi qu'une quantité comprise entre 1 et 100</span>`);
     } else {
       const key = "panier";
       let myCart = JSON.parse(localStorage.getItem(key));
       const item = {
         id: id,
         info: {
-          personalisation: [{ color: color, quantity: quantity },{ color: color, quantity: quantity },{ color: color, quantity: quantity }],
+          personalisation: [{ color: color, quantity: quantity }],
           price: kanape.price,
           description: kanape.description,
           name: kanape.name,
@@ -86,26 +87,10 @@ function addInformations(kanape) {
         }
       }
 
-
-        function confirmationAdditionPannier() {
-          alert(
-            `${item.quantity} ${item.name} placé(s) dans votre panier`,
-            item
-          );
-        }
-      }
-      // document.location.href = "cart.html"
+      
+       document.location.href = "cart.html"
     }
   });
 }
 
-// controle si local storage vide
 
-// si oui rajouter item
-
-// si non controler Id
-//     si nouveau id le rajouter
-//     sinon controler couleur
-
-// si nouvelle couleur le rajouter
-// sinon cumuler noyuveau nombre avec ancien
