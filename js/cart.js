@@ -1,58 +1,112 @@
+let myCart;
+let totalProducts;
+let totalPrice;
 
-RecupLocalStorage(); 
+RecupLocalStorage();
 
 function RecupLocalStorage() {
-  const numberOfItems = localStorage.length;
-  for (let i = 0; i < numberOfItems; i++) {
-    let item = localStorage.getItem(localStorage.key(i));
-    // console.log("objet a la position " , i, "est", item) //donnes les items de JSON
-    const objetitem = JSON.parse(item); //transforme JSON en Objet  (inverse JSON.stringify)
-     console.log(objetitem)
-    addProducts(objetitem)
-  }
+  myCart = JSON.parse(localStorage.getItem("panier"));
+  addProducts();
 }
 
+function addProducts() {
+  document.querySelector("#cart__items").innerHTML = "";
 
-function addProducts(donnees){
-
-  donnees.map((canap) => {
-    // incorporation du HTML
-
-    document.querySelector("#cart__items").innerHTML += `
-        <article class="cart__item" data-id="${canap.id}" data-color="${canap.color} data-quantity="${canap.quantity}" data-price="${canap.price}">
-        <div class="cart__item__img">
-          <img src="${canap.imageUrl}" alt="${canap.altTxt}">
+  myCart.map((canap) => {
+    canap.info.personalisation.map((perso) => {
+      document.querySelector("#cart__items").innerHTML += `
+      <article class="cart__item" data-id="${canap.id}" data-color="${perso.color}" data-quantity="${perso.quantity}" data-price="${canap.info.price}">
+      <div class="cart__item__img">
+        <img src="${canap.info.imageUrl}" alt="${canap.info.altTxt}">
+      </div>
+      <div class="cart__item__content">
+        <div class="cart__item__content__description">
+          <h2>${canap.info.name}</h2>
+          <p>${perso.color}</p>
+          <p>${canap.info.price}  € </p>
         </div>
-        <div class="cart__item__content">
-          <div class="cart__item__content__description">
-            <h2>${canap.name}</h2>
-            <p>${canap.color}</p>
-            <p>${canap.price}  € </p>
+        <div class="cart__item__content__settings">
+          <div class="cart__item__content__settings__quantity">
+            <p>Qté : </p>
+            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${perso.quantity}">
           </div>
-          <div class="cart__item__content__settings">
-            <div class="cart__item__content__settings__quantity">
-              <p>Qté : </p>
-              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${canap.quantity}">
-            </div>
-            <div class="cart__item__content__settings__delete">
-            <p class="deleteItem" data-id="${canap.id}" data-color="${canap.color}">Supprimer</p>
-            </div>
+          <div class="cart__item__content__settings__delete">
+          <p class="deleteItem" data-id="${canap.id}" data-color="${perso.color}">Supprimer</p>
           </div>
         </div>
-      </article>      
-            `
+      </div>
+    </article>      
+          `;
+    });
   });
-   totalProductsQuantity();
+  totalCart();
+
+  document.querySelectorAll(".cart__item").forEach(article => article.addEventListener('change', function(e) {updateArticle(e) }))
+  document.querySelectorAll(".deleteItem").forEach(btn => btn.addEventListener('click', function(e) {deleteArticle(e) }))
+}
+
+function totalCart() {
+  totalProducts = 0;
+  totalPrice = 0;
+  let petittotal = 0;
+
+  myCart.map((modelCanap) =>
+    modelCanap.info.personalisation.map((perso) => {
+      totalProducts += perso.quantity;
+      petittotal = Number(modelCanap.info.price * perso.quantity);
+      totalPrice += petittotal;
+    })
+  );
+
+  // Affichage des résultats dans le HTML
+  document.getElementById("totalQuantity").textContent = totalProducts;
+  document.getElementById("totalPrice").textContent = totalPrice;
+}
+
+
+function updateArticle(e){
+  const currentId = e.currentTarget.dataset.id;
+    const currentColor = e.currentTarget.dataset.color;
+    const currentQuantity = Number(e.currentTarget.dataset.quantity);
+
+    // console.log(currentId,currentColor,currentQuantity);
+
+    myCart.map((modelCanap) => {
+      if (modelCanap.id === currentId) {
+        modelCanap.info.personalisation.map((perso) => {
+          if (perso.color === currentColor) {
+            perso.quantity = Number(e.target.value);
+          }
+        });
+      }
+    });
+    localStorage.setItem("panier", JSON.stringify(myCart));
+    addProducts();
+}
+
+function deleteArticle(e) {
+  const idselect = e.currentTarget.dataset.id;
+  const colorselect = e.currentTarget.dataset.color;
+
+  const newTab = myCart.map((modelCanap) => {
+    if (modelCanap.id === idselect) {
+      let res = modelCanap.info.personalisation.filter(
+        (perso) => perso.color !== colorselect
+      );
+      modelCanap.info.personalisation = res;
+      localStorage.setItem("panier", JSON.stringify(myCart));
+      addProducts();
+    }
+  });
 
 
 }
 
 
 
-function totalProductsQuantity(){
-  let quantity = document.querySelector("#totalQuantity")
-  const cart = document.querySelectorAll(".cart__item")
 
-};
+
+
+
 
 

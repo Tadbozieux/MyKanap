@@ -13,7 +13,6 @@ fetch(`http://localhost:3000/api/products/${id}`) //https://www.youtube.com/watc
   });
 
 function addInformations(kanape) {
-  //creation variable des composents produit
   document.querySelector(
     ".item__img"
   ).innerHTML = `<img src="${kanape.imageUrl}" alt="${kanape.altTxt}"></img>`;
@@ -40,6 +39,7 @@ function addInformations(kanape) {
     } else {
       const key = "panier";
       let myCart = JSON.parse(localStorage.getItem(key));
+      console.log(myCart);
       const item = {
         id: id,
         info: {
@@ -79,11 +79,12 @@ function addInformations(kanape) {
 				 	})
 
 					localStorage.setItem(key, JSON.stringify(myCart));
-					
+					console.log(myCart)
 
         } else {
           myCart.push(item);
           localStorage.setItem(key, JSON.stringify(myCart));
+          console.log(myCart)
         }
       }
 
