@@ -230,9 +230,9 @@ function controleInputs(){
         
       }
     })
-    console.log(errorFormulaireEmail);
-    let errorFormulairegeneral = ( errorFormulairePrenom  || errorFormulaireNom  || errorFormulaireadresse  || errorFormulaireVille || errorFormulaireEmail )
-    console.log(errorFormulairegeneral);
+    
+    
+    
 
     // ValidationFormulaire.addEventListener("submit", function(e){
     //   e.preventDefault();
@@ -252,53 +252,64 @@ function controleInputs(){
 
 
 
+    
+
+    /////////////////fonctions controlant les inputs formulaire//////////////////////  
     let order = document.querySelector("#order")
 
-  order.addEventListener("click", function(e){
-      e.preventDefault();
-      const numberOfItems = localStorage.length;
-        if (numberOfItems === 0){
-            alert("aucun produit n'est présent dans votre panier")
-        }else if(errorFormulairePrenom  || errorFormulaireNom  || errorFormulaireadresse  || errorFormulaireVille || errorFormulaireEmail){
-          alert ("Veuillez vérifier les information saisies dans le formulaire de contact")
-        }
-        else{
-          console.log(inputNom.value);
-          const key = "contact";
-          let contact = {
-            firstName: inputPrenom.value,
-            lastName: inputNom.value,
-            address: inputAdresse.value,
-            city: inputVille.value,
-            email: inputEmail.value,
+    order.addEventListener("click", function(e){
+        e.preventDefault();
+        const numberOfItems = localStorage.length;
+          if (numberOfItems === 0){
+              alert("aucun produit n'est présent dans votre panier")
+          }else if(errorFormulairePrenom  || errorFormulaireNom  || errorFormulaireadresse  || errorFormulaireVille || errorFormulaireEmail){
+            alert ("Veuillez vérifier les information saisies dans le formulaire de contact")
           }
-          let maFiche = [];
-          maFiche.push(contact);
-          localStorage.setItem(key, JSON.stringify(maFiche))
-        }
-      }
+          else{
+            console.log(inputNom.value);
+            const key = "contact";
+            let contact = {
+              firstName: inputPrenom.value,
+              lastName: inputNom.value,
+              address: inputAdresse.value,
+              city: inputVille.value,
+              email: inputEmail.value,
+            }
 
-  )
-  const options = {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json', 
-        'Content-Type': 'application/json' 
-    },
-    body: JSON.stringify(order)
-  };
-    console.log(options);
-    fetch("http://localhost:3000/api/products/order", options)
-.then((response) => response.json())
-.then((data) => {
-        //console.log(data);
-    // on redirige vers la page de confirmation de commande en passant l'orderId (numéro de commande) dans l'URL
-    document.location.href = `confirmation.html?orderId=${data.orderId}`;
-})
 
-                 /////////////////fonctions controlant les inputs formulaire//////////////////////  
+            
+            let maFiche = [];
+            maFiche.push(contact);
+            localStorage.setItem(key, JSON.stringify(maFiche))
+            document.location.href = `confirmation.html?orderId=${data.orderId}`;
 
+            const options = {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json', 
+                  'Content-Type': 'application/json' 
+              },
+              body: JSON.stringify(order)
+            };
+              console.log(options);
+              fetch("http://localhost:3000/api/products/order", options)
+            .then((response) => response.json())
+            .then((data) => {document.location.href = `confirmation.html?orderId=${data.orderId}`;
+                 
+            })
+
+
+          }
+    })
 
 };
 
 
+
+  
+  
+  
+  
+  
+  
+  
