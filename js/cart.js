@@ -234,22 +234,6 @@ function controleInputs(){
     
     
 
-    // ValidationFormulaire.addEventListener("submit", function(e){
-    //   e.preventDefault();
-    //   const numberOfItems = localStorage.length;
-    
-    //   if (numberOfItems === 0){
-    //   alert("aucun produit n'est présent dans votre panier")
-    //   }else if(errorFormulairegeneral){
-    //     alert ("Veuillez vérifier les information saisies dans le formulaire de contact")
-    //   }
-    //   else{
-    //     alert("top")
-    //   }
-      
-    // })
-
-
 
 
     
@@ -266,40 +250,49 @@ function controleInputs(){
             alert ("Veuillez vérifier les information saisies dans le formulaire de contact")
           }
           else{
-            console.log(inputNom.value);
-            const key = "contact";
-            let contact = {
-              firstName: inputPrenom.value,
-              lastName: inputNom.value,
-              address: inputAdresse.value,
-              city: inputVille.value,
-              email: inputEmail.value,
+            console.log(myCart);
+            let id = [];
+            for (let l = 0; l<myCart.length;l++) {
+              id.push(myCart[l].id);
+              console.log(myCart[l].id);
             }
-
-
-            
-            let maFiche = [];
-            maFiche.push(contact);
-            localStorage.setItem(key, JSON.stringify(maFiche))
-            document.location.href = `confirmation.html?orderId=${data.orderId}`;
-
-            const options = {
-              method: 'POST',
-              headers: {
-                  'Accept': 'application/json', 
-                  'Content-Type': 'application/json' 
+            console.log(id)
+          
+            const commande ={
+              contact: {
+                firstName: inputPrenom.value,
+                lastName: inputNom.value,
+                address: inputAdresse.value,
+                city: inputVille.value,
+                email: inputEmail.value,
               },
-              body: JSON.stringify(order)
-            };
-              console.log(options);
-              fetch("http://localhost:3000/api/products/order", options)
-            .then((response) => response.json())
-            .then((data) => {document.location.href = `confirmation.html?orderId=${data.orderId}`;
-                 
-            })
-
+              products : id,
+            }
+           console.log(commande);
+           localStorage.setItem("Contact", JSON.stringify(commande.products))
+            
+           
+           const options = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json', 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(commande)
+        };
+            console.log(options);
+        // on envoie les données Contact et l'id des produits à l'API
+        fetch("http://localhost:3000/api/products/order", options)
+        .then((response) => response.json())
+        .then((data) => {
+                console.log(data);
+            // on redirige vers la page de confirmation de commande en passant l'orderId (numéro de commande) dans l'URL
+            document.location.href = `confirmation.html?orderId=${data.orderId}`;
+        })
+             
 
           }
+
     })
 
 };
@@ -309,7 +302,6 @@ function controleInputs(){
   
   
   
-  
-  
+
   
   
