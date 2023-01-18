@@ -105,8 +105,200 @@ function deleteArticle(e) {
 
 
 
+let errorFormulairePrenom ;
+let errorFormulaireNom ;
+let errorFormulaireadresse ;
+let errorFormulaireVille ;
+let errorFormulaireEmail ;
+
+const boutonCommander = document.getElementById("order");
+const ValidationFormulaire = document.querySelector(".cart__order__form")
 
 
 
+
+
+
+
+
+
+
+
+                  /////////////////fonction générale controle des inputs formulaire/////////////////
+controleInputs()
+
+
+
+function controleInputs(){
+  
+
+ 
+    let inputPrenom = document.querySelector('#firstName'); //declaration emplacement input
+    inputPrenom.addEventListener('change', function() {   // ecoute de l'input
+      const prenomRgex = /^(?![\s.]+$)[A-zÀ-ú\s\-']{1,25}$/    // caracteres limitation par Regex
+      let firstNameErrorMsg = document.getElementById("firstNameErrorMsg")  //
+      let controlePrenom = prenomRgex.test(inputPrenom.value);
+      
+      if (controlePrenom) {           // si test regex OK =>
+          firstNameErrorMsg.innerText = '';  // pas de message d'erreur
+          errorFormulairePrenom = false;
+          console.log(errorFormulairePrenom);
+          
+      } 
+      else {   // Si test Regex negatif  on stop l'envoi formulaire et message d'erreur apparait sous champs problematique
+          firstNameErrorMsg.innerText = 'Veuillez indiquer un Prenom, Lettres uniquement !';
+          errorFormulairePrenom = true;
+          firstNameErrorMsg.style.color = "red"
+          firstNameErrorMsg.style.fontSize = "x-large"
+          console.log(errorFormulairePrenom);
+      }
+    });
+  
+ 
+    let inputNom = document.querySelector('#lastName');
+    inputNom.addEventListener('change', function() {
+      const nomRgex = /^(?![\s.]+$)[A-zÀ-ú\s\-']{1,25}$/
+      let nomErrorMsg = document.getElementById("lastNameErrorMsg")
+      let controlenom = nomRgex.test(inputNom.value);
+      if (controlenom) {
+          nomErrorMsg.innerText = '';
+          errorFormulaireNom = false;
+          console.log(errorFormulaireNom);
+      } 
+      else {
+          nomErrorMsg.innerText = 'Veuillez indiquer un Nom, Lettres uniquement !.';
+          errorFormulaireNom = true;
+          nomErrorMsg.style.color = "red"
+          nomErrorMsg.style.fontSize = "x-large"
+          console.log(errorFormulaireNom);
+      }
+    });
+  
+  
+    let inputAdresse = document.querySelector('#address');
+    inputAdresse.addEventListener('change', function() {
+      const adresseRgex = /^[0-9]{1,3}(?![\s.]+$)[a-zA-Z\s\-'.]+$/
+      let adresseErrorMsg = document.getElementById("addressErrorMsg")
+      let controleadresse = adresseRgex.test(inputAdresse.value);
+      if (controleadresse) {
+        adresseErrorMsg.innerText = '';
+        errorFormulaireadresse = false;
+        
+      } 
+      else {
+        adresseErrorMsg.innerText = 'Veuillez sair un numéro et un nom de voie !.';
+        errorFormulaireadresse = true;
+        adresseErrorMsg.style.color = "red"
+        adresseErrorMsg.style.fontSize = "x-large"
+      }
+    });
+  
+  
+    let inputVille = document.querySelector('#city');
+    inputVille.addEventListener('change', function() {
+    const villeRgex = /^(?![\s.]+$)[A-zÀ-ú\s\-]{1,25}$/
+    let villeErrorMsg = document.getElementById("cityErrorMsg")
+      let controleVille = villeRgex.test(inputVille.value);
+      if (controleVille) {
+        villeErrorMsg.innerText = '';
+        errorFormulaireVille = false;
+      } 
+      else {
+        villeErrorMsg.innerText = 'Veuillez sair votre localité !';
+        errorFormulaireVille = true;
+        villeErrorMsg.style.color = "red"
+        villeErrorMsg.style.fontSize = "x-large"
+      }
+    })
+  
+  
+    let inputEmail = document.querySelector('#email');
+    inputEmail.addEventListener('change', function() {
+    const emailRgex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    let emailErrorMsg = document.getElementById("emailErrorMsg")
+      let controleEmail = emailRgex.test(inputEmail.value);
+      if (controleEmail) {
+        emailErrorMsg.innerText = '';
+        errorFormulaireEmail = false;
+       
+      } 
+      else {
+        emailErrorMsg.innerText = 'Veuillez sair votre email (doit contenir "@").';
+        errorFormulaireEmail = true;
+        emailErrorMsg.style.color = "red"
+        emailErrorMsg.style.fontSize = "x-large"
+        
+      }
+    })
+    console.log(errorFormulaireEmail);
+    let errorFormulairegeneral = ( errorFormulairePrenom  || errorFormulaireNom  || errorFormulaireadresse  || errorFormulaireVille || errorFormulaireEmail )
+    console.log(errorFormulairegeneral);
+
+    // ValidationFormulaire.addEventListener("submit", function(e){
+    //   e.preventDefault();
+    //   const numberOfItems = localStorage.length;
+    
+    //   if (numberOfItems === 0){
+    //   alert("aucun produit n'est présent dans votre panier")
+    //   }else if(errorFormulairegeneral){
+    //     alert ("Veuillez vérifier les information saisies dans le formulaire de contact")
+    //   }
+    //   else{
+    //     alert("top")
+    //   }
+      
+    // })
+
+
+
+
+    let order = document.querySelector("#order")
+
+  order.addEventListener("click", function(e){
+      e.preventDefault();
+      const numberOfItems = localStorage.length;
+        if (numberOfItems === 0){
+            alert("aucun produit n'est présent dans votre panier")
+        }else if(errorFormulairePrenom  || errorFormulaireNom  || errorFormulaireadresse  || errorFormulaireVille || errorFormulaireEmail){
+          alert ("Veuillez vérifier les information saisies dans le formulaire de contact")
+        }
+        else{
+          console.log(inputNom.value);
+          const key = "contact";
+          let contact = {
+            firstName: inputPrenom.value,
+            lastName: inputNom.value,
+            address: inputAdresse.value,
+            city: inputVille.value,
+            email: inputEmail.value,
+          }
+          let maFiche = [];
+          maFiche.push(contact);
+          localStorage.setItem(key, JSON.stringify(maFiche))
+        }
+      }
+
+  )
+  const options = {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json', 
+        'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify(order)
+  };
+    console.log(options);
+    fetch("http://localhost:3000/api/products/order", options)
+.then((response) => response.json())
+.then((data) => {
+        //console.log(data);
+    // on redirige vers la page de confirmation de commande en passant l'orderId (numéro de commande) dans l'URL
+    document.location.href = `confirmation.html?orderId=${data.orderId}`;
+})
+
+                 /////////////////fonctions controlant les inputs formulaire//////////////////////  
+
+
+};
 
 
