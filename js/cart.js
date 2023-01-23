@@ -139,13 +139,13 @@ function deleteArticle(e) {
       case "address":
         myRegex = /^[0-9]{1,3}(?![\s.]+$)[a-zA-Z\s\-'.]+$/;
         validInput = myRegex.test(input.value);
-        msgError = "Veuillez sair votre adresse.";
+        msgError = "Veuillez saisir votre adresse.";
         break;
 
       case "email":
         myRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
         validInput = myRegex.test(input.value);
-        msgError = 'Veuillez sair votre email (doit contenir "@").';
+        msgError = 'Veuillez saisir votre email au bon format.';
         break;
 
     }
