@@ -1,6 +1,18 @@
+/////////////////////////////Variables///////////////////////////////
+
 let myCart;
 let totalProducts;
 let totalPrice;
+let errorFormulairePrenom ;
+let errorFormulaireNom ;
+let errorFormulaireadresse ;
+let errorFormulaireVille ;
+let errorFormulaireEmail ;
+const boutonCommander = document.getElementById("order");
+const ValidationFormulaire = document.querySelector(".cart__order__form")
+/////////////////////////////Variables///////////////////////////////
+
+/////////////////////////////////////////Recupérations des informations contenues dans le local storage///////////////////////////////////////////////
 
 RecupLocalStorage();
 
@@ -105,14 +117,6 @@ function deleteArticle(e) {
 
 
 
-let errorFormulairePrenom ;
-let errorFormulaireNom ;
-let errorFormulaireadresse ;
-let errorFormulaireVille ;
-let errorFormulaireEmail ;
-
-const boutonCommander = document.getElementById("order");
-const ValidationFormulaire = document.querySelector(".cart__order__form")
 
 
 
@@ -135,7 +139,7 @@ function controleInputs(){
  
     let inputPrenom = document.querySelector('#firstName'); //declaration emplacement input
     inputPrenom.addEventListener('change', function() {   // ecoute de l'input
-      const prenomRgex = /^(?![\s.]+$)[A-zÀ-ú\s\-']{1,25}$/    // caracteres limitation par Regex
+      const prenomRgex = /^(?![\s.]+$)[A-zÀ-ú\s\-']{1,25}$/    // limitation des caracteres  par Regex
       let firstNameErrorMsg = document.getElementById("firstNameErrorMsg")  //
       let controlePrenom = prenomRgex.test(inputPrenom.value);
       
@@ -269,7 +273,7 @@ function controleInputs(){
               products : id,
             }
            console.log(commande);
-           localStorage.setItem("Contact", JSON.stringify(commande.products))
+           localStorage.setItem("Contact", JSON.stringify(commande))
             
            
            const options = {
