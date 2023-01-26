@@ -131,17 +131,13 @@ function deleteArticle(e) {
  
       let res = modelCanap.info.personalisation.filter(perso => perso.color !== colorselect);
       if(res.length){
-        console.log(res);
         modelCanap.info.personalisation = res;
         localStorage.setItem("panier", JSON.stringify(myCart));
         addProducts();
       }else{
         canapToDelete = modelCanap
-        console.log(myCart);
         myCart = myCart.filter(modelCanap => {
-          console.log(modelCanap, canapToDelete);
           return modelCanap.id !== canapToDelete.id});
-          console.log(myCart);
         if(!myCart.length){
           localStorage.removeItem('panier');
         }else{
