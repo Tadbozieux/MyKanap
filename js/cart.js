@@ -93,6 +93,9 @@ function updateArticle(e) {
   myCart.map((modelCanap) => {
     if (modelCanap.id === currentId) {
       modelCanap.info.personalisation.map((perso) => {
+        if (e.target.value < 0 || e.target.value > 100){
+          alert("Veuillez selectionner une quantité comprise entre 1 et 100!")
+        }
         if (perso.color === currentColor) {
           perso.quantity = Number(e.target.value);
         }

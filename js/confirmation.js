@@ -7,3 +7,5 @@ const idCommande = document.getElementById("orderId");
     // On insère le numéro de commande 
     idCommande.innerText = urlOrderId;
     console.log(idCommande);
+
+    localStorage.clear();

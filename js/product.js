@@ -32,7 +32,7 @@ function addInformations(kanape) {
     const color = document.getElementById("colors").value;
     const quantity = Number(document.getElementById("quantity").value);
 
-    if (!color || color === "" || !quantity || quantity < 0 || quantity > 100) {
+    if (!color || color === "" || !quantity || quantity < 0 || quantity > 101) {
       //Si les conditions ne sont pas correctes emssage erreur:
       alert("Veuillez selectionner une couleur parmis le choix proposé ainsi qu'une quantité comprise entre 1 et 100")
       //document.querySelector('article').innerHTML('beforeend', `<span class="error">Veuillez selectionner une couleur parmis le choix proposé ainsi qu'une quantité comprise entre 1 et 100</span>`);
