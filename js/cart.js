@@ -1,5 +1,4 @@
-/////////////////////////////Variables///////////////////////////////
-
+/////////////////////////////Variables//////////////////////////
 let myCart;
 let totalProducts;
 let totalPrice;
@@ -13,7 +12,6 @@ const ValidationFormulaire = document.querySelector(".cart__order__form");
 /////////////////////////////Variables///////////////////////////////
 
 /////////////////////////////////////////Recupérations des informations contenues dans le local storage///////////////////////////////////////////////
-
 RecupLocalStorage();
 
 function RecupLocalStorage() {
@@ -23,7 +21,7 @@ function RecupLocalStorage() {
 
 function addProducts() {
   document.querySelector("#cart__items").innerHTML = "";
-
+if (myCart){
   myCart.map((canap) => {
     canap.info.personalisation.map((perso) => {
       document.querySelector("#cart__items").innerHTML += `
@@ -52,6 +50,8 @@ function addProducts() {
     });
   });
   totalCart();
+}
+ 
 
   document.querySelectorAll(".cart__item").forEach((article) =>
     article.addEventListener("change", function (e) {
@@ -95,6 +95,7 @@ function updateArticle(e) {
       modelCanap.info.personalisation.map((perso) => {
         if (e.target.value < 0 || e.target.value > 100){
           alert("Veuillez selectionner une quantité comprise entre 1 et 100!")
+          return
         }
         if (perso.color === currentColor) {
           perso.quantity = Number(e.target.value);
@@ -106,20 +107,55 @@ function updateArticle(e) {
   addProducts();
 }
 
+
+
+
+
+
+// if(myCart[0].info.personalisation.length === 0){
+//   console.log('il est vide');
+//   delete myCart[0].info.personalisation
+// }
+console.log(myCart)
+
+
+
+
 function deleteArticle(e) {
   const idselect = e.currentTarget.dataset.id;
   const colorselect = e.currentTarget.dataset.color;
-
+  let canapToDelete;
+ 
   const newTab = myCart.map((modelCanap) => {
     if (modelCanap.id === idselect) {
-      let res = modelCanap.info.personalisation.filter(
-        (perso) => perso.color !== colorselect
-      );
-      modelCanap.info.personalisation = res;
-      localStorage.setItem("panier", JSON.stringify(myCart));
-      addProducts();
+ 
+      let res = modelCanap.info.personalisation.filter(perso => perso.color !== colorselect);
+      if(res.length){
+        console.log(res);
+        modelCanap.info.personalisation = res;
+        localStorage.setItem("panier", JSON.stringify(myCart));
+        addProducts();
+      }else{
+        canapToDelete = modelCanap
+        console.log(myCart);
+        myCart = myCart.filter(modelCanap => {
+          console.log(modelCanap, canapToDelete);
+          return modelCanap.id !== canapToDelete.id});
+          console.log(myCart);
+        if(!myCart.length){
+          localStorage.removeItem('panier');
+        }else{
+          localStorage.setItem("panier", JSON.stringify(myCart));
+        }
+        addProducts();
+      }
     }
   });
+  
+    
+ 
+
+  
 }
 
 /////////////////fonction générale controle des inputs formulaire/////////////////
@@ -271,3 +307,10 @@ function deleteArticle(e) {
   //   }
   // });
 
+
+
+    //  console.log(modelCanap.info.personalisation);
+    //   myCart.splice(modelCanap.info.personalisation, idselect)
+    //    console.log(modelCanap.info.personalisation.length);
+
+    //    localStorage.removeItem(modelCanap.info.personalisation);
